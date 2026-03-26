@@ -68,7 +68,7 @@ Assumptions:
 
 * Customers targeted: 1,380
 * Expected saves ≈ 90 customers
-* **Estimated value saved = ****4,50,000**
+* Estimated value saved = **4,50,000**
 
 ---
 
