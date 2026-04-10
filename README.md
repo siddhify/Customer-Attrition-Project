@@ -8,7 +8,8 @@ A bank is currently losing approximately 20% of its customers annually due to ch
 
 As a business analyst, the goal is to identify high-risk customer segments and design targeted retention strategies.
 
-If we can accurately identify even 75% of customers likely to churn, and successfully retain 50% of them, overall churn could be reduced by approximately 7–8%, resulting in meaningful business impact.
+If we can accurately identify even 75% of customers likely to churn, and successfully retain 50% of them, overall churn could be reduced by approximately 7–8%, resulting in meaningful business impact..
+
 ---
 
 ## 2. Data Structure Overview
@@ -53,7 +54,7 @@ Churn is primarily driven by **customer engagement, product usage, and demograph
 
 ### 4.1 Customer Activity (Strongest Driver)
 
-![Engagement vs Churn](images/engagement_churn.png)
+![Engagement vs Churn]
 
 * Active churn rate: ~7%
 * Inactive churn rate: ~13%
@@ -66,7 +67,7 @@ Customer engagement is the most critical lever for retention. Even small improve
 
 ### 4.2 Product Ownership (Most Actionable Insight)
 
-![Products vs Churn](images/products_churn.png)
+![Products vs Churn]
 
 | Products | Churn Rate |
 | -------- | ---------- |
@@ -81,7 +82,7 @@ Product adoption directly improves retention, making cross-selling one of the hi
 
 ### 4.3 Age Impact
 
-![Age vs Churn](images/age_churn.png)
+![Age vs Churn]
 
 * Churn increases significantly **after age 45**
 
@@ -93,7 +94,7 @@ Retention strategies should be personalized for older customers, who may have di
 
 ### 4.4 Geographic Trends
 
-![Country vs Churn](images/country_churn.png)
+![Country vs Churn]
 
 * **Germany shows highest churn across both active and inactive users**
 
@@ -105,7 +106,7 @@ Churn is affected by customer location. Regional factors such as service quality
 
 ### 4.5 Combined Risk Analysis (Most Important)
 
-![Combined Drivers](images/combined_churn.png)
+![Combined Drivers]
 
 Customers with:
 
