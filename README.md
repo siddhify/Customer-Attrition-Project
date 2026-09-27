@@ -184,24 +184,6 @@ The Random Forest model was used to generate a churn-risk score for every custom
 
 ---
 
-## Getting Started
-
-```bash
-# clone the repo
-git clone <repo-url>
-cd bank-customer-churn-analysis
-
-# install dependencies
-pip install -r requirements.txt
-
-# launch the notebook
-jupyter notebook notebooks/Bank_Customer_Churn_Analysis_Final.ipynb
-```
-
-**Requirements:** `pandas`, `numpy`, `matplotlib`, `seaborn`, `scikit-learn`
-
----
-
 ## Caveats & Limitations
 
 **Data limitations**
