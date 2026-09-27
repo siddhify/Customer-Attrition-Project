@@ -1,209 +1,229 @@
-# Bank Customer Churn Analysis & Retention Strategy
+# Bank Customer Churn: Analysis & Predictive Retention Model
+
+Exploratory analysis and a predictive classification model to identify which bank customers are likely to churn, and a set of prioritized, ROI-ranked retention recommendations built from the findings.
+
+[![Python](https://img.shields.io/badge/Python-3.10-blue)](https://www.python.org/)
+[![scikit--learn](https://img.shields.io/badge/scikit--learn-ML-orange)](https://scikit-learn.org/)
+[![pandas](https://img.shields.io/badge/pandas-data%20analysis-150458)](https://pandas.pydata.org/)
 
 ---
 
-## 1. Background and Overview
+## Table of Contents
 
-A bank is currently losing approximately 20% of its customers annually due to churn, significantly impacting revenue and customer lifetime value.
-
-As a business analyst, the goal is to identify high-risk customer segments and design targeted retention strategies.
-
-If we can accurately identify even 75% of customers likely to churn, and successfully retain 50% of them, overall churn could be reduced by approximately 7–8%, resulting in meaningful business impact..
-
----
-
-## 2. Data Structure Overview
-
-* **Dataset Size:** 10,000 customers
-* **Features:** 12 variables
-* **Target Variable:** `churn` (1 = churned, 0 = retained)
-
-### Key Features
-
-* **Demographics:** Age, Gender, Country
-* **Financials:** Balance, Credit Score, Estimated Salary
-* **Relationship:** Tenure, Products Number
-* **Behavior:** Active Member, Credit Card
-
-### Key Statistics
-
-* **Churn Rate:** ~20%
-* **Average Age:** ~39
-* **Average Products:** ~1.5
-* **Active Members:** ~51%
+- [Background](#background)
+- [Dataset](#dataset)
+- [Executive Summary](#executive-summary)
+- [Key Drivers of Churn](#key-drivers-of-churn)
+- [Customer Segments](#customer-segments)
+- [Predictive Model](#predictive-model)
+- [Business Recommendations](#business-recommendations)
+- [Caveats & Limitations](#caveats--limitations)
+- [Final Takeaway](#final-takeaway)
 
 ---
 
-## 3. Executive Summary
+## Background
 
-### Key Findings
+A bank is currently losing approximately **20% of its customers annually** due to churn, materially impacting revenue and customer lifetime value.
 
-* Inactive customers have **~2x higher churn** than active customers
-* Customers with **2 products show lowest churn (~7–8%)**
-* Customers with **1 product show high churn (~27–29%)**
-* **Germany has highest churn across segments**
-* Churn risk increases significantly **after age 45**
+This project takes the perspective of a business analyst: identify high-risk customer segments, quantify what actually drives churn, and design targeted retention strategies grounded in the data rather than guesswork.
+
+> If we can accurately identify even 75% of customers likely to churn, and successfully retain 50% of them, overall churn could be reduced by approximately **7–8%** , a meaningful business impact at this customer base size.
 
 ---
 
-## 4. Key Drivers of Churn
+## Dataset
 
-Churn is primarily driven by **customer engagement, product usage, and demographics**.
+| | |
+|---|---|
+| **Size** | 10,000 customers |
+| **Features** | 12 variables |
+| **Target** | `churn` (1 = churned, 0 = retained) |
 
----
+**Feature groups**
 
-### 4.1 Customer Activity (Strongest Driver)
+- **Demographics:** age, gender, country
+- **Financials:** balance, credit score, estimated salary
+- **Relationship:** tenure, number of products
+- **Behavior:** active member status, credit card ownership
 
-![Engagement vs Churn]
+**Headline stats**
 
-* Active churn rate: ~7%
-* Inactive churn rate: ~13%
-
-**Inactive users are ~2x more likely to churn**
-
-Customer engagement is the most critical lever for retention. Even small improvements in activity levels can significantly reduce churn.
-
----
-
-### 4.2 Product Ownership (Most Actionable Insight)
-
-![Products vs Churn]
-
-| Products | Churn Rate |
-| -------- | ---------- |
-| 1        | ~27–29%    |
-| 2        | ~7–8%      |
-
-Moving from **1 → 2 products reduces churn by ~70%**
-
-Product adoption directly improves retention, making cross-selling one of the highest ROI strategies.
+- Churn rate: **~20%**
+- Average age: **~39**
+- Average products held: **~1.5**
+- Active members: **~51%**
 
 ---
 
-### 4.3 Age Impact
+## Executive Summary
 
-![Age vs Churn]
-
-* Churn increases significantly **after age 45**
-
-Older customers are at higher retention risk
-
-Retention strategies should be personalized for older customers, who may have different expectations and needs.
+- Inactive customers churn at **~2x the rate** of active customers
+- Customers with **2 products** show the lowest churn (**~7–8%**)
+- Customers with **1 product** show high churn (**~27–29%**)
+- **Germany** has the highest churn across every segment
+- Churn risk rises sharply **after age 45**
 
 ---
 
-### 4.4 Geographic Trends
+## Key Drivers of Churn
 
-![Country vs Churn]
+Churn is primarily driven by a combination of **engagement, product usage, and demographics** , not any single variable in isolation.
 
-* **Germany shows highest churn across both active and inactive users**
+### 1. Customer activity , the strongest single driver
 
-Indicates potential regional issues
+| Status | Churn rate |
+|---|---|
+| Active | ~7% |
+| Inactive | ~13–14% |
 
-Churn is affected by customer location. Regional factors such as service quality or competition may be influencing customer behavior.
+Inactive users are roughly **2x** more likely to churn. Engagement is the single most actionable lever available for retention , even small improvements in activity level move churn meaningfully.
 
----
+### 2. Product ownership: the most actionable insight
 
-### 4.5 Combined Risk Analysis (Most Important)
+| Products held | Churn rate |
+|---|---|
+| 1 | ~27–29% |
+| 2 | ~7–8% |
 
-![Combined Drivers]
+Moving a customer from **1 → 2 products reduces churn by roughly 70%**. This makes cross-selling one of the highest-ROI retention plays available.
 
-Customers with:
+### 3. Age
 
-* 1 product
-* Inactive status
-* Age > 45
+Churn increases significantly **after age 45**. Older customers represent a distinct, higher-risk group whose expectations and service needs likely differ from younger customers.
 
-Show **highest churn probability (~60–70%)**
+### 4. Geography
 
-Churn is driven by a combination of factors, not individual variables. Targeting this segment provides the highest impact.
+**Germany** shows the highest churn rate across both active and inactive segments, pointing to a regional issue , pricing, service quality, or competitive pressure specific to that market.
 
----
+### 5. Combined risk (most important cut of the data)
 
-## 5. Customer Segments
+The highest-risk customers are those who are simultaneously:
 
-| Segment            | Characteristics      | Risk Level |
-| ------------------ | -------------------- | ---------- |
-| At-risk            | Inactive + 1 product | High       |
-| Loyal              | Active + 2 products  | Low        |
-| High-risk          | Older + inactive     | High       |
-| Growth Opportunity | Active + 1 product   | Medium     |
+- Holding **1 product**
+- **Inactive**
+- **Over age 45**
 
----
-
-## 6. Business Recommendations
-
-### 1. Increase Customer Engagement
-
-- Use app notifications and transaction-based nudges  
-- Introduce loyalty and rewards programs  
-- Improve onboarding experience to drive early engagement 
-
-Expected impact: Reduce churn by improving activity levels
+This combination shows a churn probability of **~60–70%**, several times the base rate. Because churn is driven by the *intersection* of factors rather than any one variable, this segment is the highest-value target for intervention.
 
 ---
 
-### 2. Cross-Sell Second Product (High ROI)
+## Customer Segments
 
-- Target customers with only 1 product  
-- Offer bundled products and personalized recommendations  
-- Use in-app prompts to encourage product discovery 
-
-Expected impact: ~70% lower churn for converted users
-
----
-
-### 3. Focus on Germany Market
-
-* Investigate pricing, service gaps
-* Launch localized retention campaigns
-
-Expected impact: Address region-specific churn drivers
+| Segment | Characteristics | Risk Level |
+|---|---|---|
+| At-risk | Inactive + 1 product | High |
+| Loyal | Active + 2 products | Low |
+| High-risk | Older + inactive | High |
+| Growth opportunity | Active + 1 product | Medium |
 
 ---
 
-### 4. Retain Older Customers (45+)
+## Predictive Model
 
-* Offer personalized financial solutions
-* Provide dedicated relationship management
-* Ensure easy access to human support when needed 
+Beyond descriptive analysis, a classification model was built to score each customer's individual churn probability, enabling proactive, risk-ranked targeting rather than static segment rules.
 
-Expected impact: Reduce churn in high-risk demographic
+**Approach:**
 
----
+1. Data quality checks (missing values, duplicates, dtypes)
+2. Feature engineering: one-hot encoding for categorical variables, standardization for scale-sensitive models
+3. Two models trained and compared:
+   - **Logistic Regression** , interpretable baseline; coefficients show direction and relative strength of each driver
+   - **Random Forest** , captures non-linear interactions (e.g. the age × activity × product-count pattern found in the EDA)
 
-### 5. Enable Targeted Campaigns
+**Results (held-out test set):**
 
-* Focus on high-risk customers instead of mass outreach
-* Prioritize segments with highest churn probability
+| Metric | Logistic Regression | Random Forest |
+|---|---|---|
+| Accuracy | 0.714 | 0.829 |
+| Precision | 0.387 | 0.561 |
+| Recall | 0.700 | 0.720 |
+| F1 score | 0.499 | 0.631 |
+| ROC-AUC | 0.777 | **0.866** |
 
-Expected impact: Higher ROI with lower campaign cost
+**Top predictive features (both models agree):** age, active member status, number of products, country (Germany), balance.
 
----
-
-## 7. Caveats and Assumptions
-
-### Data Limitations
-
-* Small sample size for customers with 3–4 products
-* No behavioral data (transactions, complaints, app usage)
-* No time-series data
-
-### Analytical Limitations
-
-* Correlation does not imply causation
-* External factors not included
+The Random Forest model was used to generate a churn-risk score for every customer, which concentrates a large share of actual churners into a small, actionable top-risk decile , the basis for the targeted-campaign recommendation below.
 
 ---
 
-## 8. Final Takeaway
+## Business Recommendations
 
-This project demonstrates how data can be used to:
+### 1. Increase customer engagement
+- App notifications and transaction-based nudges
+- Loyalty and rewards programs
+- Improved onboarding to drive early engagement
 
-* Identify **who is likely to churn**
-* Understand **why churn happens**
-* Enable **targeted retention strategies**
+**Expected impact:** reduced churn via improved activity levels
 
-**Key Drivers:** Engagement + Product Usage
-**Key Strategy:** Increase activity + cross-sell second product
-**Key Outcome:** Focused targeting improves retention and business impact
+### 2. Cross-sell a second product (highest ROI)
+- Target customers holding only 1 product
+- Bundled offers and personalized recommendations
+- In-app prompts to encourage product discovery
+
+**Expected impact:** ~70% lower churn among converted customers
+
+### 3. Focus on the Germany market
+- Investigate pricing and service gaps
+- Launch localized retention campaigns
+
+**Expected impact:** addresses a region-specific churn driver rather than treating it as noise
+
+### 4. Retain older customers (45+)
+- Personalized financial solutions
+- Dedicated relationship management
+- Easy access to human support when needed
+
+**Expected impact:** reduced churn in the highest-risk demographic
+
+### 5. Enable targeted, risk-ranked campaigns
+- Use the model's churn-probability scores instead of mass outreach
+- Prioritize the highest-risk segments identified above
+
+**Expected impact:** higher ROI at lower campaign cost, by concentrating spend where it is most likely to work
+
+---
+
+## Getting Started
+
+```bash
+# clone the repo
+git clone <repo-url>
+cd bank-customer-churn-analysis
+
+# install dependencies
+pip install -r requirements.txt
+
+# launch the notebook
+jupyter notebook notebooks/Bank_Customer_Churn_Analysis_Final.ipynb
+```
+
+**Requirements:** `pandas`, `numpy`, `matplotlib`, `seaborn`, `scikit-learn`
+
+---
+
+## Caveats & Limitations
+
+**Data limitations**
+- Small sample size for customers holding 3–4 products (as few as 8–31 customers in some cuts) , churn rates here should not be treated as reliable
+- No behavioral data available (transactions, complaints, app usage logs)
+- No time-series data , this is a single snapshot, not a rolling "will churn in next N days" view
+
+**Analytical limitations**
+- Correlation does not imply causation recommendations should be validated with controlled retention pilots before full rollout
+- External factors (competitor activity, macroeconomic conditions) are not included
+- A fairness/model-risk review is recommended before deployment, given the observed country and demographic effects, to confirm the model doesn't produce disparate outcomes across groups
+
+---
+
+## Final Takeaway
+
+This project shows how data can be used to:
+
+- Identify **who** is likely to churn
+- Understand **why** churn happens
+- Enable **targeted**, cost-effective retention strategies
+
+**Key drivers:** engagement + product usage
+**Key strategy:** increase activity + cross-sell a second product
+**Key outcome:** focused, risk-ranked targeting improves retention and ROI over mass-outreach campaigns
